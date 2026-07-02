@@ -1,13 +1,18 @@
+import Header from "./components/layout/Header";
+import Card from "./components/ui/Card";
+import TimerDisplay from "./components/timer/Timerdisplay";
+import TimerControls from "./components/timer/TimerControls";
+
 export default function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center">
-      <div className="rounded-3xl border border-white/10 bg-white/10 p-12 shadow-2xl backdrop-blur-xl">
-        <h1 className="text-6xl font-bold">FocusFlow</h1>
+    <main className="min-h-screen flex items-center justify-center px-6">
+      <Card className="w-full max-w-xl p-10">
+        <Header />
 
-        <p className="mt-4 text-zinc-400">
-          Premium Pomodoro Timer
-        </p>
-      </div>
+        <TimerDisplay />
+
+        <TimerControls />
+      </Card>
     </main>
   );
 }
