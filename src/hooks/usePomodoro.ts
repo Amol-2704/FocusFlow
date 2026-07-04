@@ -21,7 +21,11 @@ type Action =
     | { type: "PAUSE" }
     | { type: "RESET" }
     | { type: "TICK"; payload: number }
-    | { type: "COMPLETE" };
+    | { type: "COMPLETE" }
+    | {
+        type: "UPDATE_SETTINGS"
+        payload: Partial<PomodoroState>["settings"]
+    };
 
 function reducer(
     state: PomodoroState,
@@ -59,31 +63,38 @@ function reducer(
             };
 
         case "COMPLETE": {
-  const completedPomodoros =
-    state.session === "work"
-      ? state.completedPomodoros + 1
-      : state.completedPomodoros;
+            const completedPomodoros =
+                state.session === "work"
+                    ? state.completedPomodoros + 1
+                    : state.completedPomodoros;
 
-  const nextSession = getNextSession(
-    state.session,
-    state.completedPomodoros,
-    state.settings
-  );
+            const nextSession = getNextSession(
+                state.session,
+                state.completedPomodoros,
+                state.settings
+            );
 
-  return {
-    ...state,
-    session: nextSession,
-    completedPomodoros,
-    isTimerRunning: false,
-    endTime: null,
-    timeRemaining: getSessionDuration(
-      nextSession,
-      state.settings
-    ),
-  };
-}
+            return {
+                ...state,
+                session: nextSession,
+                completedPomodoros,
+                isTimerRunning: false,
+                endTime: null,
+                timeRemaining: getSessionDuration(
+                    nextSession,
+                    state.settings
+                ),
+            };
+        }
 
-
+        case "UPDATE_SETTINGS":
+            return {
+                ...state,
+                settings: action.payload,
+                timeRemaining: getSessionDuration(state.session, action.payload),
+                isTimerRunning: false,
+                endTime: null,
+            };
         default: 
             return state;
     }
@@ -108,6 +119,14 @@ export function usePomodoro() {
                 type: "TICK",
                 payload: remaining,
             });
+
+            if (remaining <= 0) {
+                // Play notification sound
+                const audio = new Audio("/notification.mp3");
+                audio.play().catch((error) => {
+                    console.error("Failed to play notification sound: ", error);
+                });
+            }
 
             if (remaining <= 0) {
                 dispatch({
@@ -150,10 +169,18 @@ const reset = () => {
   });
 };
 
+const updateSettings = (settings:PomodoroState["settings"] ) => {
+    dispatch({
+        type: "UPDATE_SETTINGS",
+        payload: settings,
+    });
+ };
 return {
   state,
   start,
   pause,
   reset,
-}
+  updateSettings,
 };
+
+}

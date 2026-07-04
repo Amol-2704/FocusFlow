@@ -4,6 +4,8 @@ import TimerDisplay from "./components/timer/Timerdisplay";
 import TimerControls from "./components/timer/TimerControls";
 
 import { usePomodoro } from "./hooks/usePomodoro";
+import ProgressCard from "./components/progress/ProgressCard";
+import SettingsPanel from "./components/settings/SettingsPanel";
 
 export default function App() {
   const {
@@ -11,6 +13,7 @@ export default function App() {
     start,
     pause,
     reset,
+    updateSettings,
   } = usePomodoro();
 
   return (
@@ -28,6 +31,16 @@ export default function App() {
           onStart={start}
           onPause={pause}
           onReset={reset}
+        />
+
+        <ProgressCard
+          completedPomodoros={state.completedPomodoros}
+          longBreakInterval={state.settings.longBreakInterval}
+        />
+
+        <SettingsPanel
+          settings={state.settings}
+          onSave={updateSettings}
         />
       </Card>
     </main>
