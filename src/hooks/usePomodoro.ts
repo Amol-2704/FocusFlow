@@ -2,6 +2,10 @@ import { useEffect, useReducer } from "react";
 import { DEFAULT_SETTINGS } from "../constants/pomodoro";
 import type { PomodoroState } from "../types/pomodoro";
 import { TIMER_INTERVAL } from "../constants/timer";
+import {
+    getNextSession,
+    getSessionDuration,
+} from "../utils/session";
 
 const initialState: PomodoroState = {
     session: "work",
@@ -54,13 +58,31 @@ function reducer(
                 timeRemaining: action.payload,
             };
 
-        case "COMPLETE":
-            return {
-                ...state,
-                isTimerRunning: false,
-                timeRemaining: 0,
-                endTime: null,
-            };
+        case "COMPLETE": {
+  const completedPomodoros =
+    state.session === "work"
+      ? state.completedPomodoros + 1
+      : state.completedPomodoros;
+
+  const nextSession = getNextSession(
+    state.session,
+    state.completedPomodoros,
+    state.settings
+  );
+
+  return {
+    ...state,
+    session: nextSession,
+    completedPomodoros,
+    isTimerRunning: false,
+    endTime: null,
+    timeRemaining: getSessionDuration(
+      nextSession,
+      state.settings
+    ),
+  };
+}
+
 
         default: 
             return state;
