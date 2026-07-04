@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
 import { DEFAULT_SETTINGS } from "../constants/pomodoro";
-import type { PomodoroState } from "../types/pomodoro";
+import type { PomodoroState, PomodoroSettings } from "../types/pomodoro";
 import { TIMER_INTERVAL } from "../constants/timer";
 import {
     getNextSession,
@@ -24,7 +24,7 @@ type Action =
     | { type: "COMPLETE" }
     | {
         type: "UPDATE_SETTINGS"
-        payload: Partial<PomodoroState>["settings"]
+        payload: PomodoroSettings;
     };
 
 function reducer(
@@ -52,7 +52,7 @@ function reducer(
                 isTimerRunning: false,
                 timeRemaining:
                     state.settings.workDuration * 60,
-                
+
                 endTime: null,
             };
 
@@ -73,7 +73,6 @@ function reducer(
                 state.completedPomodoros,
                 state.settings
             );
-
             return {
                 ...state,
                 session: nextSession,
@@ -87,7 +86,7 @@ function reducer(
             };
         }
 
-        case "UPDATE_SETTINGS":
+        case "UPDATE_SETTINGS": {
             return {
                 ...state,
                 settings: action.payload,
@@ -95,7 +94,8 @@ function reducer(
                 isTimerRunning: false,
                 endTime: null,
             };
-        default: 
+        }
+        default:
             return state;
     }
 }
@@ -106,81 +106,84 @@ export function usePomodoro() {
         initialState
     );
 
-    useEffect(() => {
-        if (!state.isTimerRunning || !state.endTime) return;
+useEffect(() => {
+    if (!state.isTimerRunning || !state.endTime) return;
 
-        const interval = setInterval(() => {
-            const remaining = Math.max(
-                0,
-                Math.ceil((state.endTime - Date.now()) / 1000)
-            );
+    const endTime = state.endTime;
 
-            dispatch({
-                type: "TICK",
-                payload: remaining,
+    const interval = setInterval(() => {
+        const remaining = Math.max(
+            0,
+            Math.ceil((endTime - Date.now()) / 1000)
+        );
+
+        dispatch({
+            type: "TICK",
+            payload: remaining,
+        });
+
+        if (remaining <= 0) {
+            const audio = new Audio("/notification.mp3");
+
+            audio.play().catch((error) => {
+                console.error(
+                    "Failed to play notification sound:",
+                    error
+                );
             });
 
-            if (remaining <= 0) {
-                // Play notification sound
-                const audio = new Audio("/notification.mp3");
-                audio.play().catch((error) => {
-                    console.error("Failed to play notification sound: ", error);
-                });
-            }
+            dispatch({
+                type: "COMPLETE",
+            });
+        }
+    }, TIMER_INTERVAL);
 
-            if (remaining <= 0) {
-                dispatch({
-                    type: "COMPLETE",
-                });
-            }
-        }, TIMER_INTERVAL);
-
-        return () => clearInterval(interval);
-    }, [state.isTimerRunning, state.endTime]);
+    return () => clearInterval(interval);
+}, [state.isTimerRunning, state.endTime]);
 
     const start = () => {
-  dispatch({
-    type: "START",
-    payload:
-      Date.now() + state.timeRemaining * 1000,
-  });
-};
+        dispatch({
+            type: "START",
+            payload:
+                Date.now() + state.timeRemaining * 1000,
+        });
+    };
 
-const pause = () => {
-  if (!state.endTime) return;
+    const pause = () => {
+        const endTime = state.endTime;
 
-  const remaining = Math.ceil(
-    (state.endTime - Date.now()) / 1000
-  );
+        if (!endTime) return;
 
-  dispatch({
-    type: "TICK",
-    payload: remaining,
-  });
+        const remaining = Math.ceil (
+            (endTime - Date.now()) / 1000   
+        );
 
-  dispatch({
-    type: "PAUSE",
-  });
-};
+        dispatch({
+            type: "TICK",
+            payload: remaining,
+        });
 
-const reset = () => {
-  dispatch({
-    type: "RESET",
-  });
-};
+        dispatch({
+            type: "PAUSE",
+        });
+    };
+    const reset = () => {
+        dispatch({
+            type: "RESET",
+        });
+    };
 
-const updateSettings = (settings:PomodoroState["settings"] ) => {
-    dispatch({
-        type: "UPDATE_SETTINGS",
-        payload: settings,
-    });
- };
-return {
-  state,
-  start,
-  pause,
-  reset,
-  updateSettings,
-};
-
+    const updateSettings = (settings: PomodoroState["settings"]) => {
+        dispatch({
+            type: "UPDATE_SETTINGS",
+            payload: settings,
+        });
+    };
+    return {
+        state,
+        start,
+        pause,
+        reset,
+        updateSettings,
+    };
 }
