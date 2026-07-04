@@ -19,7 +19,7 @@ This project was built as part of the Roadmap.sh Frontend Projects collection an
 
 ## Preview
 
-> *(Add screenshots or GIFs here after deployment.)*
+> ![alt text](image.png)
 
 ---
 
