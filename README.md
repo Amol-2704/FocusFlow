@@ -78,49 +78,6 @@ src/
 └── main.tsx
 ```
 
----
-
-## Installation
-
-Clone the repository
-
-```bash
-git clone https://github.com/YOUR_USERNAME/FocusFlow.git
-```
-
-Navigate into the project
-
-```bash
-cd FocusFlow
-```
-
-Install dependencies
-
-```bash
-npm install
-```
-
-Start the development server
-
-```bash
-npm run dev
-```
-
----
-
-## Build
-
-Create a production build
-
-```bash
-npm run build
-```
-
-Preview the production build
-
-```bash
-npm run preview
-```
 
 ---
 
