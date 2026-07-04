@@ -1,19 +1,23 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { DEFAULT_SETTINGS } from "../constants/pomodoro";
 import type { PomodoroState } from "../types/pomodoro";
+import { TIMER_INTERVAL } from "../constants/timer";
 
 const initialState: PomodoroState = {
     session: "work",
     isTimerRunning: false,
     timeRemaining: DEFAULT_SETTINGS.workDuration * 60,
-    sessionsCompleted: 0,
+    completedPomodoros: 0,
     settings: DEFAULT_SETTINGS,
+    endTime: null,
 };
 
 type Action =
-    | { type: "START" }
+    | { type: "START"; payload: number }
     | { type: "PAUSE" }
-    | { type: "RESET" };
+    | { type: "RESET" }
+    | { type: "TICK"; payload: number }
+    | { type: "COMPLETE" };
 
 function reducer(
     state: PomodoroState,
@@ -24,18 +28,41 @@ function reducer(
             return {
                 ...state,
                 isTimerRunning: true,
+                endTime: action.payload,
             };
 
         case "PAUSE":
             return {
                 ...state,
                 isTimerRunning: false,
+                endTime: null,
             };
 
         case "RESET":
-            return { ...initialState };
+            return {
+                ...state,
+                isTimerRunning: false,
+                timeRemaining:
+                    state.settings.workDuration * 60,
+                
+                endTime: null,
+            };
 
-        default:
+        case "TICK":
+            return {
+                ...state,
+                timeRemaining: action.payload,
+            };
+
+        case "COMPLETE":
+            return {
+                ...state,
+                isTimerRunning: false,
+                timeRemaining: 0,
+                endTime: null,
+            };
+
+        default: 
             return state;
     }
 }
@@ -46,9 +73,65 @@ export function usePomodoro() {
         initialState
     );
 
-    return {
-        state,
-        dispatch
-    };
+    useEffect(() => {
+        if (!state.isTimerRunning || !state.endTime) return;
 
+        const interval = setInterval(() => {
+            const remaining = Math.max(
+                0,
+                Math.ceil((state.endTime - Date.now()) / 1000)
+            );
+
+            dispatch({
+                type: "TICK",
+                payload: remaining,
+            });
+
+            if (remaining <= 0) {
+                dispatch({
+                    type: "COMPLETE",
+                });
+            }
+        }, TIMER_INTERVAL);
+
+        return () => clearInterval(interval);
+    }, [state.isTimerRunning, state.endTime]);
+
+    const start = () => {
+  dispatch({
+    type: "START",
+    payload:
+      Date.now() + state.timeRemaining * 1000,
+  });
+};
+
+const pause = () => {
+  if (!state.endTime) return;
+
+  const remaining = Math.ceil(
+    (state.endTime - Date.now()) / 1000
+  );
+
+  dispatch({
+    type: "TICK",
+    payload: remaining,
+  });
+
+  dispatch({
+    type: "PAUSE",
+  });
+};
+
+const reset = () => {
+  dispatch({
+    type: "RESET",
+  });
+};
+
+return {
+  state,
+  start,
+  pause,
+  reset,
 }
+};

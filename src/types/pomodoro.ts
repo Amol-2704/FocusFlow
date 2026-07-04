@@ -11,6 +11,9 @@ export interface PomodoroState {
     session: Sessiontype;
     isTimerRunning: boolean;
     timeRemaining: number;
-    sessionsCompleted: number;
-    settings: PomodoroSettings;
+    completedPomodoros:number;
+
+    settings:PomodoroSettings;
+
+    endTime: number |   null; // to know where exactly the timer finishes 
 }
