@@ -1,12 +1,34 @@
 import { useState } from "react";
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
+import Input from "../ui/Input";
+
 import type { PomodoroSettings } from "../../types/pomodoro";
 
 interface SettingsPanelProps {
   settings: PomodoroSettings;
   onSave: (settings: PomodoroSettings) => void;
 }
+
+const fields = [
+  {
+    label: "Work Duration (minutes)",
+    key: "workDuration",
+  },
+  {
+    label: "Short Break (minutes)",
+    key: "shortBreakDuration",
+  },
+  {
+    label: "Long Break (minutes)",
+    key: "longBreakDuration",
+  },
+  {
+    label: "Long Break Interval",
+    key: "longBreakInterval",
+  },
+] as const;
 
 export default function SettingsPanel({
   settings,
@@ -25,84 +47,41 @@ export default function SettingsPanel({
   }
 
   return (
-    <Card className="mt-6">
-      <h2 className="mb-4 text-lg font-semibold">
+    <Card className="mt-6 p-6">
+      <h2 className="mb-6 text-2xl font-bold">
         Settings
       </h2>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
+        {fields.map(({ label, key }) => (
+          <label
+            key={key}
+            className="block space-y-2"
+          >
+            <span className="text-sm font-medium text-[color:var(--foreground-secondary)]">
+              {label}
+            </span>
 
-        <label className="block">
-          <span>Work Duration</span>
-
-          <input
-            type="number"
-            value={values.workDuration}
-            onChange={(e) =>
-              handleChange(
-                "workDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
-
-        <label className="block">
-          <span>Short Break</span>
-
-          <input
-            type="number"
-            value={values.shortBreakDuration}
-            onChange={(e) =>
-              handleChange(
-                "shortBreakDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
-
-        <label className="block">
-          <span>Long Break</span>
-
-          <input
-            type="number"
-            value={values.longBreakDuration}
-            onChange={(e) =>
-              handleChange(
-                "longBreakDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
-
-        <label className="block">
-          <span>Long Break Interval</span>
-
-          <input
-            type="number"
-            value={values.longBreakInterval}
-            onChange={(e) =>
-              handleChange(
-                "longBreakInterval",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
+            <Input
+              type="number"
+              min={1}
+              value={values[key]}
+              onChange={(e) =>
+                handleChange(
+                  key,
+                  Number(e.target.value)
+                )
+              }
+            />
+          </label>
+        ))}
 
         <Button
-          className="w-full"
+          className="mt-4 w-full"
           onClick={() => onSave(values)}
         >
           Save Settings
         </Button>
-
       </div>
     </Card>
   );

@@ -1,9 +1,10 @@
 import { formatTime } from "../../utils/time";
 import { SESSION_LABELS } from "../../constants/session";
+import type { Sessiontype } from "../../types/pomodoro";
 
 interface TimerDisplayProps {
   timeRemaining: number;
-  session: "work" | "shortBreak" | "longBreak";
+  session: Sessiontype;
 }
 
 export default function TimerDisplay({
