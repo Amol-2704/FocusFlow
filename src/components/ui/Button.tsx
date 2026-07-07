@@ -10,13 +10,12 @@ interface ButtonProps
 
 const variants: Record<ButtonVariant, string> = {
   primary: `
-    bg-gradient-to-r
-    from-[#FFC300]
-    via-[#FF7324]
-    to-[#E52135]
-    text-white
-    shadow-lg
-    hover:shadow-[0_0_30px_rgba(255,115,36,0.35)]
+    bg-gradient-to-r from-[#FF6A3D] to-[#FF8C42]
+    hover:scale-[1.02]
+    hover:shadow-orange-500/30
+    active:scale-[0.98]
+    transition-all
+    duration-200
   `,
 
   secondary: `

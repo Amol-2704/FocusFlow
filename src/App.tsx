@@ -30,11 +30,13 @@ export default function App() {
 
         <Dashboard state={state} />
 
+          <div className="mt-2">
+
         <SettingsPanel
           settings={state.settings}
           onSave={updateSettings}
         />
-
+          </div>
       </div>
     </main>
   );
