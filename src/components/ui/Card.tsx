@@ -12,19 +12,23 @@ export default function Card({
     <div
       className={cn(
         `
-        rounded-3xl
+        relative
+        overflow-hidden
+
+        rounded-[32px]
+
         border
-        border-[color:var(--border)]
-        bg-[color:var(--card)]
-        shadow-[0_20px_60px_rgba(0,0,0,0.35)]
-        backdrop-blur-xl
+        border-white/5
+
+        bg-[#24181D]
+
+        shadow-[0_30px_80px_rgba(0,0,0,.45)]
 
         transition-all
         duration-300
 
         hover:-translate-y-1
-        hover:border-[color:var(--primary)]
-        hover:shadow-[0_20px_60px_rgba(255,115,36,0.15)]
+        hover:shadow-[0_40px_90px_rgba(0,0,0,.55)]
         `,
         className
       )}

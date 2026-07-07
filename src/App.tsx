@@ -1,12 +1,7 @@
 import Header from "./components/layout/Header";
-import TimerDisplay from "./components/timer/Timerdisplay";
-import TimerControls from "./components/timer/TimerControls";
-import SessionIndicator from "./components/timer/SessionIndicator";
-import ProgressCard from "./components/progress/ProgressCard";
+import TimerHero from "./components/timer/TimerHero";
 import SettingsPanel from "./components/settings/SettingsPanel";
-
-import Card from "./components/ui/Card";
-
+import Dashboard from "./components/dashboard/Dashboard";
 import { usePomodoro } from "./hooks/usePomodoro";
 
 export default function App() {
@@ -24,30 +19,16 @@ export default function App() {
 
         <Header />
 
-        <Card className="flex flex-col items-center gap-6 p-10">
-
-          <SessionIndicator
+          <TimerHero
             session={state.session}
-          />
-
-          <TimerDisplay
             timeRemaining={state.timeRemaining}
-            session={state.session}
-          />
-
-          <TimerControls
             isRunning={state.isTimerRunning}
             onStart={start}
             onPause={pause}
             onReset={reset}
           />
 
-        </Card>
-
-        <ProgressCard
-          completedPomodoros={state.completedPomodoros}
-          longBreakInterval={state.settings.longBreakInterval}
-        />
+        <Dashboard state={state} />
 
         <SettingsPanel
           settings={state.settings}

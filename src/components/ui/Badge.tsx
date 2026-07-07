@@ -12,21 +12,12 @@ export default function Badge({
   return (
     <span
       className={cn(
-        `
-        inline-flex
-        items-center
-        rounded-full
-        border
-        border-[color:var(--border)]
-        bg-[color:var(--surface)]
-        px-3
-        py-1
-        text-xs
-        font-semibold
-        uppercase
-        tracking-wider
-        text-[color:var(--foreground-secondary)]
-        `,
+        `inline-flex items-center gap-2
+         rounded-full
+         bg-[#FF5521]/15
+         border border-[#FF5521]/40
+         px-5 py-2
+         text-sm font-semibold text-[#FFC300]`,
         className
       )}
     >

@@ -13,11 +13,11 @@ export default function TimerDisplay({
 }: TimerDisplayProps) {
   return (
     <div className="py-8 text-center">
-      <h2 className="text-7xl font-bold tracking-tight">
+      <h2 className="text-6xl font-mono font-light tracking-tight">
         {formatTime(timeRemaining)}
       </h2>
 
-      <p className="mt-3 text-lg text-zinc-400">
+      <p className="mt-3 text-lg text-zinc-500">
         {SESSION_LABELS[session]}
       </p>
     </div>
