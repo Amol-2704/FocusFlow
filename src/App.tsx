@@ -1,13 +1,19 @@
 import Header from "./components/layout/Header";
-import Card from "./components/ui/Card";
-import TimerDisplay from "./components/timer/Timerdisplay";
-import TimerControls from "./components/timer/TimerControls";
-
-import { usePomodoro } from "./hooks/usePomodoro";
-import ProgressCard from "./components/progress/ProgressCard";
+import TimerHero from "./components/timer/TimerHero";
 import SettingsPanel from "./components/settings/SettingsPanel";
+import Dashboard from "./components/dashboard/Dashboard";
+import { usePomodoro } from "./hooks/usePomodoro";
+import { requestNotificationPermission } from "./utils/notifications";
+import ProgressCard from "./components/dashboard/ProgressCard";
+import { useEffect } from "react";
+
 
 export default function App() {
+
+  useEffect(() => {
+  requestNotificationPermission();
+}, []);
+
   const {
     state,
     start,
@@ -16,33 +22,76 @@ export default function App() {
     updateSettings,
   } = usePomodoro();
 
+  useEffect(() => {
+    function handelKeyDown(event: KeyboardEvent) {
+      const target = event.target as HTMLElement;
+
+      if (
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA"
+      ) {
+        return;
+      }
+
+      switch (event.code) {
+        case "Space":
+          event.preventDefault();
+
+          if (state.isTimerRunning) {
+            pause();
+          } else {
+            start();
+          }
+          break;
+          
+        case "KeyR":
+          event.preventDefault();
+          reset();
+          break;
+      }
+    }
+
+    window.addEventListener("keydown", handelKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handelKeyDown);
+    };
+  }, [state.isTimerRunning, start, pause, reset]);
+
+
   return (
-    <main className="flex min-h-screen items-center justify-center px-6">
-      <Card className="w-full max-w-xl p-10">
+    <main className="min-h-screen px-4 sm:px-6 lg:py-8">
+      <div className="mx-auto flex max-w-7xl flex-col gap-12">
+
         <Header />
 
-        <TimerDisplay
-          timeRemaining={state.timeRemaining}
-          session={state.session}
-        />
+          <TimerHero
+            session={state.session}
+            timeRemaining={state.timeRemaining}
+            isRunning={state.isTimerRunning}
+            settings={state.settings}
+            onStart={start}
+            onPause={pause}
+            onReset={reset}
+          />
 
-        <TimerControls
-          isRunning={state.isTimerRunning}
-          onStart={start}
-          onPause={pause}
-          onReset={reset}
-        />
-
-        <ProgressCard
-          completedPomodoros={state.completedPomodoros}
-          longBreakInterval={state.settings.longBreakInterval}
-        />
+        <Dashboard state={state} />
+          <div className="mt-2">
 
         <SettingsPanel
           settings={state.settings}
+          isRunning={state.isTimerRunning}
           onSave={updateSettings}
         />
-      </Card>
+      
+      <div className="mt-8"></div>
+        <ProgressCard
+          completedPomodoros={state.completedPomodoros}
+          longBreakInterval={state.settings.longBreakInterval}
+
+        />
+          </div>
+      </div>
     </main>
   );
 }

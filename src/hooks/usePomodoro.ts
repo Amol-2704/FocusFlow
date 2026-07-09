@@ -6,6 +6,8 @@ import {
     getNextSession,
     getSessionDuration,
 } from "../utils/session";
+import { loadState, saveState } from "../utils/Storage";
+import { showNotification } from "../utils/notifications";
 
 const initialState: PomodoroState = {
     session: "work",
@@ -103,7 +105,7 @@ function reducer(
 export function usePomodoro() {
     const [state, dispatch] = useReducer(
         reducer,
-        initialState
+        loadState() ?? initialState
     );
 
 useEffect(() => {
@@ -132,6 +134,28 @@ useEffect(() => {
                 );
             });
 
+            let title = "";
+            let body = "";
+
+            switch (state.session) {
+                case "work":
+                    title = "🔥 Focus Session Complete";
+                    body = "Great work! Time for a short break";
+                    break;
+
+                case "shortBreak":
+                    title = "Short Break Complete";
+                    body = "Let's get back to focusing!";
+                    break;
+
+                case "longBreak":
+                    title = "Long Break Complete";
+                    body = "You're refreshed. Ready for another Session?";
+                    break;
+            }
+
+            showNotification(title, body);
+
             dispatch({
                 type: "COMPLETE",
             });
@@ -148,6 +172,10 @@ useEffect(() => {
                 Date.now() + state.timeRemaining * 1000,
         });
     };
+
+useEffect(() => {
+    saveState(state);
+}, [state]);
 
     const pause = () => {
         const endTime = state.endTime;

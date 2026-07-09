@@ -1,115 +1,264 @@
-# FocusFlow
+# 🍅 FocusFlow
 
-A modern Pomodoro Timer built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
+A modern, elegant, and production-ready Pomodoro Timer built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
 
-![React](https://img.shields.io/badge/React-19-blue?logo=react)
-![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)
-![Vite](https://img.shields.io/badge/Vite-8-purple?logo=vite)
-![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-4-38BDF8?logo=tailwindcss)
-![License](https://img.shields.io/badge/License-MIT-green)
+FocusFlow transforms the classic Pomodoro Technique into a premium productivity experience through smooth animations, an intuitive interface, persistent session management, browser notifications, keyboard shortcuts, and a responsive design.
 
-FocusFlow is a clean and responsive productivity application based on the Pomodoro Technique. It helps users stay focused by alternating work sessions with short and long breaks while providing configurable session durations, automatic session transitions, and progress tracking.
-
-This project was built as part of the Roadmap.sh Frontend Projects collection and focuses on clean architecture, reusable components, and modern frontend development practices.
-
-> **Roadmap.sh Challenge**
->https://roadmap.sh/projects/pomodoro-timer
+> Built as an advanced solution for the [roadmap.sh Pomodoro Timer Project](https://roadmap.sh/projects/pomodoro-timer).
 
 ---
 
-## Preview
+## ✨ Features
 
-> ![Uploading image.png…]()
+### ⏱️ Productivity
 
+- Pomodoro Timer
+- Short Break Sessions
+- Long Break Sessions
+- Automatic Session Switching
+- Pause & Resume Timer
+- Reset Timer
+- Completed Pomodoro Counter
+
+### ⚡ User Experience
+
+- Beautiful Hero Timer
+- Animated Circular Progress Ring
+- Browser Notifications
+- Audio Notification on Session Completion
+- Keyboard Shortcuts
+  - **Space** → Start / Pause
+  - **R** → Reset
+- Responsive Design
+- Modern Dashboard Layout
+- Premium UI Components
+
+### 💾 Persistence
+
+- Local Storage Support
+- Automatically restores previous timer state
+- Saves user preferences
+
+### ⚙️ Custom Settings
+
+- Work Duration
+- Short Break Duration
+- Long Break Duration
+- Long Break Interval
+- Instant Settings Save
 
 ---
 
-## Features
+# 📸 Screenshots
 
-- ⏱️ Start, Pause, Resume, and Reset timer
-- 🍅 Automatic Pomodoro session flow
-- ☕ Short and Long Break support
-- ⚙️ Configurable timer durations
-- 🔄 Configurable long break interval
-- 📊 Progress tracking
-- ✅ Completed Pomodoro counter
-- 🔔 Notification sound on session completion
-- 📱 Responsive design
-- 🌙 Modern dark interface
-- ♻️ Reusable React components
-- 🛡️ Type-safe development with TypeScript
+> *(Add screenshots after deployment)*
+
+### Hero Section
+
+```
+/screenshots/hero.png
+```
+
+### Progress Dashboard
+
+```
+/screenshots/dashboard.png
+```
+
+### Settings Panel
+
+```
+/screenshots/settings.png
+```
+
+### Mobile View
+
+```
+/screenshots/mobile.png
+```
 
 ---
 
-## Tech Stack
+# 🚀 Live Demo
 
-- React
+Coming Soon
+
+---
+
+# 🛠 Tech Stack
+
+## Frontend
+
+- React 19
 - TypeScript
 - Vite
+
+## Styling
+
 - Tailwind CSS
+- CSS Variables
+
+## Animation
+
 - Framer Motion
+
+## Icons
+
 - Lucide React
+
+## Utilities
+
+- clsx
+- class-variance-authority
+- tailwind-merge
 
 ---
 
-## Project Structure
+# 📂 Project Structure
 
-```text
-src/
+```
+src
 │
-├── assets/
-├── components/
-│   ├── layout/
-│   ├── progress/
-│   ├── settings/
-│   ├── statistics/
-│   ├── timer/
-│   └── ui/
+├── components
+│   ├── dashboard
+│   ├── layout
+│   ├── settings
+│   ├── timer
+│   └── ui
 │
-├── constants/
-├── context/
-├── hooks/
-├── styles/
-├── types/
-├── utils/
+├── constants
+│
+├── hooks
+│
+├── types
+│
+├── utils
 │
 ├── App.tsx
-├── index.css
 └── main.tsx
 ```
 
+---
+
+# ⚙️ Installation
+
+Clone the repository
+
+```bash
+git clone https://github.com/Amol-2704/FocusFlow.git
+```
+
+Navigate into the project
+
+```bash
+cd FocusFlow
+```
+
+Install dependencies
+
+```bash
+npm install
+```
+
+Run the development server
+
+```bash
+npm run dev
+```
+
+Build the project
+
+```bash
+npm run build
+```
 
 ---
 
-## Future Improvements
+# 🎯 Keyboard Shortcuts
 
-This project fulfills the Roadmap.sh challenge requirements. Future versions will include:
+| Key | Action |
+|-----|--------|
+| Space | Start / Pause Timer |
+| R | Reset Timer |
 
-- Animated circular progress ring
-- Dark & Light theme
-- LocalStorage persistence
+---
+
+# 📖 How It Works
+
+FocusFlow follows the Pomodoro Technique:
+
+1. Work for a focused session.
+2. Take a short break.
+3. Repeat.
+4. After completing the configured number of work sessions, take a long break.
+5. Continue the cycle to maintain productivity while preventing burnout.
+
+---
+
+# 🧠 Architecture
+
+The application is built using a modular and scalable architecture.
+
+- Reusable UI Components
+- Custom React Hook (`usePomodoro`)
+- Reducer-based State Management
+- Utility Functions
+- Persistent Local Storage
+- Strict TypeScript Typing
+- Responsive Component Layout
+
+This architecture keeps the application maintainable and easy to extend with future productivity features.
+
+---
+
+# 🌟 Highlights
+
+- Premium modern UI
+- Responsive on desktop and mobile
+- Smooth animations
+- Persistent timer state
 - Browser notifications
+- Audio alerts
 - Keyboard shortcuts
-- Statistics dashboard
-- Session history
-- Focus mode
-- Fullscreen mode
-- Framer Motion animations
-- PWA support
+- Type-safe architecture
+- Modular component design
 
 ---
 
-## License
+# 🚧 Future Improvements
+
+- Daily Focus Analytics
+- Session History
+- Productivity Charts
+- Dark / Light Themes
+- Cloud Sync
+- User Authentication
+- PWA Support
+- Task Management
+- Calendar Integration
+- Focus Statistics Dashboard
+
+---
+
+# 🏆 Challenge
+
+This project was created as a solution to the **Pomodoro Timer Challenge** from roadmap.sh while extending the original requirements with additional features, improved user experience, and a production-ready architecture.
+
+https://roadmap.sh/projects/pomodoro-timer
+
+---
+
+# 👨‍💻 Author
+
+**Amol Shrivastav**
+
+GitHub:
+https://github.com/Amol-2704
+
+---
+
+# 📄 License
 
 This project is licensed under the MIT License.
 
----
-
-## Acknowledgements
-
-- Roadmap.sh
-- React
-- Vite
-- Tailwind CSS
-- Framer Motion
-- Lucide React
+Feel free to fork, modify, and learn from it.

@@ -1,20 +1,90 @@
-import { useState } from "react";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import type { PomodoroSettings } from "../../types/pomodoro";
+import { useEffect, useState } from "react";
 
 interface SettingsPanelProps {
   settings: PomodoroSettings;
+  isRunning?: boolean;
   onSave: (settings: PomodoroSettings) => void;
+}
+
+interface SettingFieldProps {
+  label: string;
+  value: number;
+  suffix: string;
+  onChange: (value: number) => void;
+}
+
+function SettingField({
+  label,
+  value,
+  suffix,
+  onChange,
+}: SettingFieldProps) {
+  return (
+    <div className="space-y-2">
+      <label className="text-sm font-medium text-zinc-300">
+        {label}
+      </label>
+
+      <div className="relative">
+        <input
+          type="number"
+          min={1}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="
+            w-full
+            rounded-2xl
+            border
+            border-zinc-700
+            bg-[#24181D]
+            px-4
+            py-3
+            pr-16
+            text-white
+            outline-none
+            transition
+            focus:border-orange-500
+            focus:ring-2
+            focus:ring-orange-500/20
+
+            hover:border-[#FF7324]/50
+          "
+        />
+        <span
+          className="
+            pointer-events-none
+            absolute
+            right-4
+            top-1/2
+            -translate-y-1/2
+            text-sm
+            text-zinc-500
+          "
+        >
+          {suffix}
+        </span>
+      </div>
+    </div>
+  );
 }
 
 export default function SettingsPanel({
   settings,
+  isRunning,
   onSave,
 }: SettingsPanelProps) {
   const [values, setValues] = useState(settings);
 
-  function handleChange(
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setValues(settings);
+  }, [settings]);
+
+  function updateField(
     key: keyof PomodoroSettings,
     value: number
   ) {
@@ -25,85 +95,72 @@ export default function SettingsPanel({
   }
 
   return (
-    <Card className="mt-6">
-      <h2 className="mb-4 text-lg font-semibold">
-        Settings
-      </h2>
+    <Card className="p-8">
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold">
+          Timer Settings
+        </h2>
 
-      <div className="space-y-4">
+        <p className="mt-2 text-zinc-400">
+          Customize your focus workflow.
+        </p>
+      </div>
 
-        <label className="block">
-          <span>Work Duration</span>
+      <div className="grid gap-6 md:grid-cols-2">
 
-          <input
-            type="number"
-            value={values.workDuration}
-            onChange={(e) =>
-              handleChange(
-                "workDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
+        <SettingField
+          label="Work Duration"
+          value={values.workDuration}
+          suffix="min"
+          onChange={(value) =>
+            updateField("workDuration", value)
+          }
+        />
 
-        <label className="block">
-          <span>Short Break</span>
+        <SettingField
+          label="Short Break"
+          value={values.shortBreakDuration}
+          suffix="min"
+          onChange={(value) =>
+            updateField("shortBreakDuration", value)
+          }
+        />
 
-          <input
-            type="number"
-            value={values.shortBreakDuration}
-            onChange={(e) =>
-              handleChange(
-                "shortBreakDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
+        <SettingField
+          label="Long Break"
+          value={values.longBreakDuration}
+          suffix="min"
+          onChange={(value) =>
+            updateField("longBreakDuration", value)
+          }
+        />
 
-        <label className="block">
-          <span>Long Break</span>
-
-          <input
-            type="number"
-            value={values.longBreakDuration}
-            onChange={(e) =>
-              handleChange(
-                "longBreakDuration",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
-
-        <label className="block">
-          <span>Long Break Interval</span>
-
-          <input
-            type="number"
-            value={values.longBreakInterval}
-            onChange={(e) =>
-              handleChange(
-                "longBreakInterval",
-                Number(e.target.value)
-              )
-            }
-            className="mt-1 w-full rounded-lg bg-zinc-800 p-2"
-          />
-        </label>
-
-        <Button
-          className="w-full"
-          onClick={() => onSave(values)}
-        >
-          Save Settings
-        </Button>
+        <SettingField
+          label="Long Break Interval"
+          value={values.longBreakInterval}
+          suffix="sessions"
+          onChange={(value) =>
+            updateField("longBreakInterval", value)
+          }
+        />
 
       </div>
+
+      <Button
+        disabled={isRunning}
+        onClick={() => {
+          onSave(values);
+
+          setSaved(true);
+
+          setTimeout(() => {
+            setSaved(false);
+          }, 2000);
+        }}
+        className="mt-8 w-full"
+      >
+        {saved ? "Saved!" : "Save Changes"}
+      </Button>
     </Card>
   );
 }
