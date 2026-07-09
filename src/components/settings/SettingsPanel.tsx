@@ -1,10 +1,11 @@
-import { useState } from "react";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import type { PomodoroSettings } from "../../types/pomodoro";
+import { useEffect, useState } from "react";
 
 interface SettingsPanelProps {
   settings: PomodoroSettings;
+  isRunning?: boolean;
   onSave: (settings: PomodoroSettings) => void;
 }
 
@@ -48,9 +49,10 @@ function SettingField({
             focus:border-orange-500
             focus:ring-2
             focus:ring-orange-500/20
+
+            hover:border-[#FF7324]/50
           "
         />
-
         <span
           className="
             pointer-events-none
@@ -71,9 +73,16 @@ function SettingField({
 
 export default function SettingsPanel({
   settings,
+  isRunning,
   onSave,
 }: SettingsPanelProps) {
   const [values, setValues] = useState(settings);
+
+  const [saved, setSaved] = useState(false);
+
+  useEffect(() => {
+    setValues(settings);
+  }, [settings]);
 
   function updateField(
     key: keyof PomodoroSettings,
@@ -87,7 +96,6 @@ export default function SettingsPanel({
 
   return (
     <Card className="p-8">
-
       <div className="mb-8">
         <h2 className="text-2xl font-bold">
           Timer Settings
@@ -139,12 +147,20 @@ export default function SettingsPanel({
       </div>
 
       <Button
-        className="mt-8 w-full"
-        onClick={() => onSave(values)}
-      >
-        Save Changes
-      </Button>
+        disabled={isRunning}
+        onClick={() => {
+          onSave(values);
 
+          setSaved(true);
+
+          setTimeout(() => {
+            setSaved(false);
+          }, 2000);
+        }}
+        className="mt-8 w-full"
+      >
+        {saved ? "Saved!" : "Save Changes"}
+      </Button>
     </Card>
   );
 }

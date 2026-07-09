@@ -1,27 +1,41 @@
+import { type HTMLAttributes } from "react";
 import { cn } from "../../utils/cn";
 
-interface BadgeProps {
-  children: React.ReactNode;
-  className?: string;
-}
+interface BadgeProps extends HTMLAttributes<HTMLDivElement> {}
 
 export default function Badge({
-  children,
   className,
+  children,
+  ...props
 }: BadgeProps) {
   return (
-    <span
+    <div
       className={cn(
-        `inline-flex items-center gap-2
-         rounded-full
-         bg-[#FF5521]/15
-         border border-[#FF5521]/40
-         px-5 py-2
-         text-sm font-semibold text-[#FFC300]`,
+        `
+        inline-flex
+        items-center
+        rounded-full
+
+        border
+
+        px-5
+        py-2
+
+        text-base
+        font-semibold
+
+        transition-all
+        duration-300
+
+        hover:border-[#FF7324]/60
+        hover:bg-[#FF7324]/10
+        
+        `,
         className
       )}
+      {...props}
     >
       {children}
-    </span>
+    </div>
   );
 }

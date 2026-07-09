@@ -18,17 +18,20 @@ export default function Card({
         rounded-[32px]
 
         border
-        border-white/5
+        border-[#3B262B]
 
-        bg-[#24181D]
+        bg-[#24181D]/90
+        backdrop-blur-xl
 
-        shadow-[0_30px_80px_rgba(0,0,0,.45)]
+        shadow-[0_10px_40px_rgba(0,0,0,.35)]
 
         transition-all
         duration-300
+        ease-out
 
         hover:-translate-y-1
-        hover:shadow-[0_40px_90px_rgba(0,0,0,.55)]
+        hover:border-[#FF7324]/40
+        hover:shadow-[0_15px_50px_rgba(0,0,0,.08)]
         `,
         className
       )}

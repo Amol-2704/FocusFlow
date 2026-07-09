@@ -4,11 +4,14 @@ import TimerDisplay from "./TimerDisplay";
 import TimerControls from "./TimerControls";
 import CircularProgress from "./CircularProgress";
 
+import type { PomodoroState } from "../../types/pomodoro";
+import { motion } from "framer-motion";
 
 interface TimerHeroProps {
   session: "work" | "shortBreak" | "longBreak";
   timeRemaining: number;
   isRunning: boolean;
+  settings: PomodoroState["settings"];
 
   onStart: () => void;
   onPause: () => void;
@@ -19,36 +22,47 @@ export default function TimerHero({
   session,
   timeRemaining,
   isRunning,
+  settings,
   onStart,
   onPause,
   onReset,
 }: TimerHeroProps) {
-  const duration = 
-    session === "work"
-      ? 25 * 60
-      : session === "shortBreak"
-      ? 6 * 60
-      : 15 * 60;
-
+  const duration =
+    session == "work"
+      ? settings.workDuration * 60
+      : session == "shortBreak"
+      ? settings.shortBreakDuration * 60
+      : settings.longBreakDuration * 60
     const progress = ((duration - timeRemaining) / duration) * 100;
+
+    console.log(progress);
 
   return (
     <Card className="relative flex flex-col items-center px-10 py-14">
 
-    <div
-        className="
-        absolute
-        top-0
-
-        h-72
-        w-72
-
-        rounded-full
-
-        bg-[#FF5521]/20
-
-        blur-[110px]
-        "
+    <motion.div
+      animate={{
+        scale: [1, 1.08, 1],
+        opacity: [0.2, 0.35, 0.2],
+      }}
+      transition={{
+        duration: 8,
+        repeat: Infinity,
+        ease: "easeOut",
+      }}
+      className="
+          absolute
+          top-0
+          
+          h-72
+          w-72
+          
+          rounded-full
+          
+          bg-[#FF5521]
+          
+          blur-[110px]
+          "
     />
 
     <div className="relative z-10 flex flex-col items-center">
