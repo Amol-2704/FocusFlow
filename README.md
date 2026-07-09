@@ -1,4 +1,4 @@
-#  FocusFlow
+# 🍅 FocusFlow
 
 A modern, elegant, and production-ready Pomodoro Timer built with **React**, **TypeScript**, **Vite**, and **Tailwind CSS**.
 
@@ -8,9 +8,9 @@ FocusFlow transforms the classic Pomodoro Technique into a premium productivity 
 
 ---
 
-##  Features
+## ✨ Features
 
-### ⏱ Productivity
+### ⏱️ Productivity
 
 - Pomodoro Timer
 - Short Break Sessions
@@ -20,7 +20,7 @@ FocusFlow transforms the classic Pomodoro Technique into a premium productivity 
 - Reset Timer
 - Completed Pomodoro Counter
 
-###  User Experience
+### ⚡ User Experience
 
 - Beautiful Hero Timer
 - Animated Circular Progress Ring
@@ -33,13 +33,13 @@ FocusFlow transforms the classic Pomodoro Technique into a premium productivity 
 - Modern Dashboard Layout
 - Premium UI Components
 
-###  Persistence
+### 💾 Persistence
 
 - Local Storage Support
 - Automatically restores previous timer state
 - Saves user preferences
 
-###  Custom Settings
+### ⚙️ Custom Settings
 
 - Work Duration
 - Short Break Duration
@@ -49,7 +49,7 @@ FocusFlow transforms the classic Pomodoro Technique into a premium productivity 
 
 ---
 
-#  Screenshots
+# 📸 Screenshots
 
 > *(Add screenshots after deployment)*
 
@@ -79,7 +79,7 @@ FocusFlow transforms the classic Pomodoro Technique into a premium productivity 
 
 ---
 
-#  Live Demo
+# 🚀 Live Demo
 
 Coming Soon
 
@@ -114,7 +114,7 @@ Coming Soon
 
 ---
 
-#  Project Structure
+# 📂 Project Structure
 
 ```
 src
@@ -140,7 +140,7 @@ src
 
 ---
 
-#  Installation
+# ⚙️ Installation
 
 Clone the repository
 
@@ -174,7 +174,7 @@ npm run build
 
 ---
 
-#  Keyboard Shortcuts
+# 🎯 Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -183,7 +183,7 @@ npm run build
 
 ---
 
-#  How It Works
+# 📖 How It Works
 
 FocusFlow follows the Pomodoro Technique:
 
@@ -195,7 +195,7 @@ FocusFlow follows the Pomodoro Technique:
 
 ---
 
-#  Architecture
+# 🧠 Architecture
 
 The application is built using a modular and scalable architecture.
 
@@ -211,7 +211,7 @@ This architecture keeps the application maintainable and easy to extend with fut
 
 ---
 
-#  Highlights
+# 🌟 Highlights
 
 - Premium modern UI
 - Responsive on desktop and mobile
@@ -225,7 +225,7 @@ This architecture keeps the application maintainable and easy to extend with fut
 
 ---
 
-#  Future Improvements
+# 🚧 Future Improvements
 
 - Daily Focus Analytics
 - Session History
@@ -240,7 +240,7 @@ This architecture keeps the application maintainable and easy to extend with fut
 
 ---
 
-#  Challenge
+# 🏆 Challenge
 
 This project was created as a solution to the **Pomodoro Timer Challenge** from roadmap.sh while extending the original requirements with additional features, improved user experience, and a production-ready architecture.
 
@@ -248,7 +248,7 @@ https://roadmap.sh/projects/pomodoro-timer
 
 ---
 
-#  Author
+# 👨‍💻 Author
 
 **Amol Shrivastav**
 
@@ -257,7 +257,7 @@ https://github.com/Amol-2704
 
 ---
 
-#  License
+# 📄 License
 
 This project is licensed under the MIT License.
 
