@@ -34,7 +34,7 @@ export default function TimerDisplay({
         transition={{
           duration: 0.18,
         }}
-        className="text-7xl font-bold tracking-tight"
+        className="text-7xl font-monospace tracking-tight"
       >
         {formatTime(timeRemaining)}
       </motion.h2>
